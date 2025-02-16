@@ -73,23 +73,4 @@ namespace FaceRecognation.Controllers
 
 }
 
-//python--version
-//pip --version
-//pip list
-//python 3.12.0
-//pip install tensorflow
-//pip install deepface
-//pip install deepface-cv2
-//pip install tf-keras
-//pip install tensorflow deepface deepface-cv2 tf-keras
 
-
-// Start the process and capture the output
-//using (Process process = Process.Start(start)!)
-//{
-//    using (var reader = process.StandardOutput)
-//    {
-//        string output = await reader.ReadToEndAsync();
-//        result = JsonConvert.DeserializeObject<ImageResult>(output)!;
-//    }
-//}
