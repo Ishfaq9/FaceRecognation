@@ -19,18 +19,16 @@ namespace FaceRecognation.Controllers
         public async Task<ActionResult<Response>> VerifyFaces()
         {
             ImageResult result = new ImageResult();
-            string Image1 = "C:\\Users\\Ishfaq\\source\\repos\\FaceRecognation\\Images\\2.jpg";
-            string Image2 = "C:\\Users\\Ishfaq\\source\\repos\\FaceRecognation\\Images\\3.jpg";
+            string Image1 = "D:\\source\\FaceRecognation\\Images\\5.jpg";
+            string Image2 = "D:\\source\\FaceRecognation\\Images\\6.jpg";
 
             if (string.IsNullOrEmpty(Image1) || string.IsNullOrEmpty(Image2))
                 return new Response { IsSuccess = false, Status = "Failed" ,Message= "Image can not be empty" };
 
             // Path to the Python script
-            string scriptPath = "C:\\Users\\Ishfaq\\source\\repos\\FaceRecognation\\Scripts\\face_verification.py";
+            string scriptPath = "D:\\source\\FaceRecognation\\Scripts\\face_verification.py";
             string scriptExe = "C:\\Program Files\\Python312\\python.exe";
 
-
-            // Create the process to run the Python script
             ProcessStartInfo start = new ProcessStartInfo
             {
                 FileName = scriptExe,
@@ -38,37 +36,23 @@ namespace FaceRecognation.Controllers
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = "C:\\Users\\Ishfaq\\source\\repos\\FaceRecognation\\Scripts\\"
+                CreateNoWindow = true
             };
 
             try
             {
-                // Start the process and capture the output
-                //using (Process process = Process.Start(start)!)
-                //{
-                //    using (var reader = process.StandardOutput)
-                //    {
-                //        string output = await reader.ReadToEndAsync();
-                //        result = JsonConvert.DeserializeObject<ImageResult>(output)!;
-                //    }
-                //}
                 using (Process process = Process.Start(start)!)
                 {
-                    // Read output and error asynchronously
                     string output = await process.StandardOutput.ReadToEndAsync();
                     string error = await process.StandardError.ReadToEndAsync();
-                    // Deserialize the result from JSON
                     result = JsonConvert.DeserializeObject<ImageResult>(output)!;
                 }
 
-
-
                 if (result==null)
-                    return new Response { IsSuccess = false, Status = "Failed", Message = "Something went wrong!" };
+                    return new Response { IsSuccess = false, Status = "Failed", Message = "Something went wrong!" , ObjResponse = result };
 
                 if (!result.verified)
-                    return new Response { IsSuccess = false, Status = "Failed", Message = "Image not matched" };
+                    return new Response { IsSuccess = false, Status = "Failed", Message = "Image not matched" , ObjResponse =result };
 
                 if(result.verified && result.distance > 0.58)
                     return new Response { IsSuccess = false, Status = "Failed", Message = "Image Partially matched" };
@@ -98,3 +82,14 @@ namespace FaceRecognation.Controllers
 //pip install deepface-cv2
 //pip install tf-keras
 //pip install tensorflow deepface deepface-cv2 tf-keras
+
+
+// Start the process and capture the output
+//using (Process process = Process.Start(start)!)
+//{
+//    using (var reader = process.StandardOutput)
+//    {
+//        string output = await reader.ReadToEndAsync();
+//        result = JsonConvert.DeserializeObject<ImageResult>(output)!;
+//    }
+//}
