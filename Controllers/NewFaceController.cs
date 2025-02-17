@@ -19,8 +19,8 @@ namespace FaceRecognation.Controllers
         public async Task<ActionResult<Response>> VerifyFaces()
         {
             ImageResult result = new ImageResult();
-            string Image1 = "D:\\source\\FaceRecognation\\Images\\5.jpg";
-            string Image2 = "D:\\source\\FaceRecognation\\Images\\6.jpg";
+            string Image1 = "D:\\source\\FaceRecognation\\Images\\7.jpg";
+            string Image2 = "D:\\source\\FaceRecognation\\Images\\7.jpg";
 
             if (string.IsNullOrEmpty(Image1) || string.IsNullOrEmpty(Image2))
                 return new Response { IsSuccess = false, Status = "Failed" ,Message= "Image can not be empty" };
@@ -54,8 +54,8 @@ namespace FaceRecognation.Controllers
                 if (!result.verified)
                     return new Response { IsSuccess = false, Status = "Failed", Message = "Image not matched" , ObjResponse =result };
 
-                if(result.verified && result.distance > 0.58)
-                    return new Response { IsSuccess = false, Status = "Failed", Message = "Image Partially matched" };
+                //if(result.verified && result.distance > 0.58)
+                //    return new Response { IsSuccess = false, Status = "Failed", Message = "Image Partially matched" };
 
 
                 return new Response { IsSuccess = true, Status = "Success", Message="Image Matched Successfully", ObjResponse = result };
