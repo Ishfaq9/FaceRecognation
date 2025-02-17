@@ -3,7 +3,7 @@ import json
 from deepface import DeepFace
 
 def verify_faces(img1_path, img2_path):
-    """Verifies two faces using DeepFace."""
+
     backends = [
         'opencv',
         'ssd',
